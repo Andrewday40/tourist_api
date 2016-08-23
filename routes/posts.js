@@ -57,5 +57,29 @@ function createPost(req, res, next){
     }
   });
 }
-function updatePost(){}
-function deletePost(){}
+function updatePost(req, res, next){
+  Post.findOneAndUpdate({_id: req.params.id}, req.body, function(err, oldPost){
+    if(err){
+      res.status(500).json({
+        msg: err
+      });
+    } else {
+      res.status(200).json({
+        oldPost: oldPost
+      });
+    }
+  });
+}
+function deletePost(req, res, next){
+  Post.findOneAndRemove({_id: req.params.id}, function(err, removePost){
+    if(err){
+      res.status(500).json({
+        msg: err
+      });
+    } else {
+      res.status(200).json({
+        removePost: removePost
+      });
+    }
+  });
+}
