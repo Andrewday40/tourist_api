@@ -19,7 +19,7 @@ var postSchema = new Schema({
     type: String,
     require: true
   },
-  catagory: {
+  category: {
     type: String,
     require: true
   }
