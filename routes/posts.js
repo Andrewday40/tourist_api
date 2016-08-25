@@ -43,7 +43,7 @@ function createPost(req, res, next){
     location: req.body.location,
     description: req.body.description,
     person: req.body.person,
-    catagory: req.body.category
+    category: req.body.category
   });
   post.save(function(err, newPost){
     if(err){
