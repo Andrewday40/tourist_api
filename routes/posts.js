@@ -3,13 +3,28 @@ var express = require('express');
 var router = express.Router();
 var Post = require('../models/post.js');
 
+
 router.get('/posts', getAllThePost);
-router.get('/posts/:id', getPost);
+// router.get('/posts/:id', getPost);
+router.get('/posts/city', getPostByCity);
 router.post('/posts',  createPost);
 router.put('/posts/:id', updatePost);
 router.delete('/posts/:id', deletePost);
 
 module.exports = router;
+
+function getPostByCity(req, res, next){
+  Post.find({city: { "$regex": req.query.city || "", "$options": "i" },
+              state: {"$regex": req.query.state || "", "$options": "i"}}, function(err, posts){
+    if(err){
+      return res.status(500).json({
+        msg: err
+      });
+    } else {
+      return res.status(200).json(posts);
+    }
+  })
+}
 
 function getAllThePost(req, res, next){
   Post.find({}, function(err, foundPosts){
@@ -43,7 +58,8 @@ function createPost(req, res, next){
     location: req.body.location,
     description: req.body.description,
     person: req.body.person,
-    category: req.body.category
+    category: req.body.category,
+    state: req.body.state
   });
   post.save(function(err, newPost){
     if(err){

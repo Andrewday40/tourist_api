@@ -7,6 +7,10 @@ var postSchema = new Schema({
     type: String,
     require: true
   },
+  state: {
+    type: String,
+    require: true
+  },
   location: {
     type: String,
     require: true
